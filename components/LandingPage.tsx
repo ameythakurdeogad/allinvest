@@ -9,7 +9,7 @@ const HOW_STEPS = [
   {
     num: "01",
     title: "Tell us about yourself",
-    desc: "Answer 9 quick questions — takes under 3 minutes. No jargon, no tricks.",
+    desc: "Answer up to 10 quick questions — takes under 3 minutes. No jargon, no tricks.",
   },
   {
     num: "02",
@@ -105,7 +105,7 @@ export default function LandingPage({ onStart }: Props) {
           </h1>
 
           <p className="text-lg text-slate max-w-xl leading-relaxed mb-10">
-            Answer 9 questions about your age, family, goals, and risk appetite.
+            Answer up to 10 questions about your age, family, goals, and risk appetite.
             We instantly show you which plans actually make sense for you — not
             what earns the highest commission.
           </p>
