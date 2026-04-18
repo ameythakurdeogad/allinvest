@@ -257,11 +257,11 @@ export function getRecommendations(profile: UserProfile): { primary: Plan[]; sec
   const scores: Record<string, number> = {};
   PLANS.forEach(p => scores[p.id] = 0);
 
-  const hasTermCover = profile.hasExistingCover === "yes" && (profile.existingPolicyTypes ?? []).includes("term");
-  const hasHealthCover = profile.hasExistingCover === "yes" && (profile.existingPolicyTypes ?? []).includes("health");
+  const hasTermCover = profile.hasExistingCover === "yes" && profile.existingPolicyTypes.includes("term");
+  const hasHealthCover = profile.hasExistingCover === "yes" && profile.existingPolicyTypes.includes("health");
 
-  if (!hasTermCover) scores["sampoorna-raksha"] = 5;
-  if (!hasHealthCover) scores["shubh-health-pro"] = 5;
+  if (!hasTermCover) scores["sampoorna-raksha"] = Math.max(scores["sampoorna-raksha"] ?? 0, 5);
+  if (!hasHealthCover) scores["shubh-health-pro"] = Math.max(scores["shubh-health-pro"] ?? 0, 5);
 
   const incomeHigh = ["12-25L", "25-50L", "50L+"].includes(profile.income);
   const incomeVeryHigh = ["25-50L", "50L+"].includes(profile.income);
