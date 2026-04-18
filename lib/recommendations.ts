@@ -11,6 +11,43 @@ export interface UserProfile {
   healthConditions: string;    // "yes" | "no"
 }
 
+type AgeGroup = "18-25" | "26-35" | "36-45" | "46-55" | "55+";
+type RiskAppetite = "conservative" | "moderate" | "aggressive";
+
+const ALLOCATION_MATRIX: Record<AgeGroup, Record<RiskAppetite, { protection: number; stable: number; market: number }>> = {
+  "18-25": {
+    conservative: { protection: 40, stable: 40, market: 20 },
+    moderate:     { protection: 35, stable: 30, market: 35 },
+    aggressive:   { protection: 25, stable: 20, market: 55 },
+  },
+  "26-35": {
+    conservative: { protection: 40, stable: 35, market: 25 },
+    moderate:     { protection: 35, stable: 30, market: 35 },
+    aggressive:   { protection: 25, stable: 20, market: 55 },
+  },
+  "36-45": {
+    conservative: { protection: 35, stable: 40, market: 25 },
+    moderate:     { protection: 30, stable: 35, market: 35 },
+    aggressive:   { protection: 25, stable: 30, market: 45 },
+  },
+  "46-55": {
+    conservative: { protection: 30, stable: 50, market: 20 },
+    moderate:     { protection: 25, stable: 45, market: 30 },
+    aggressive:   { protection: 20, stable: 40, market: 40 },
+  },
+  "55+": {
+    conservative: { protection: 20, stable: 60, market: 20 },
+    moderate:     { protection: 20, stable: 55, market: 25 },
+    aggressive:   { protection: 20, stable: 50, market: 30 },
+  },
+};
+
+export function getAllocation(age: string, riskAppetite: string): { protection: number; stable: number; market: number } {
+  const row = ALLOCATION_MATRIX[age as AgeGroup];
+  if (!row) return { protection: 35, stable: 35, market: 30 };
+  return row[riskAppetite as RiskAppetite] ?? { protection: 35, stable: 35, market: 30 };
+}
+
 export interface Plan {
   id: string;
   name: string;
