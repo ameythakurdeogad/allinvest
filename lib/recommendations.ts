@@ -6,8 +6,9 @@ export interface UserProfile {
   dependents: string;   // "0" | "1-2" | "3+"
   riskAppetite: string; // "conservative" | "moderate" | "aggressive"
   goals: string[];      // multi-select
-  hasExistingCover: string; // "yes" | "no" | "unsure"
-  healthConditions: string; // "yes" | "no"
+  hasExistingCover: string;    // "yes" | "no" | "unsure"
+  existingPolicyType: string;  // shown only when hasExistingCover === "yes"
+  healthConditions: string;    // "yes" | "no"
 }
 
 export interface Plan {
@@ -163,6 +164,46 @@ export const PLANS: Plan[] = [
     color: "#0369a1",
     highlight: "Best for professionals"
   },
+  {
+    id: "fg-pension-ga1",
+    name: "FG Pension GA-1 Plan",
+    shortName: "FG Pension GA-1",
+    type: "Pension + Protection Plan",
+    tagline: "Insurance and pension — even if you start at 65",
+    description: "The only plan in the market that offers life insurance cover up to age 65, making it ideal for clients who delayed retirement planning. Combines the dual benefit of family protection with guaranteed pension income, so you never have to choose one over the other.",
+    keyBenefits: [
+      "Insurance cover available even at age 65",
+      "Best-in-market option for late retirement planning",
+      "Dual benefit: life protection + guaranteed pension",
+      "Flexible premium payment options",
+      "Guaranteed retirement income for life",
+      "Financial security for family throughout"
+    ],
+    bestFor: "Late Retirement Planning",
+    icon: "🏦",
+    color: "#7c3aed",
+    highlight: "Best for age 50+"
+  },
+  {
+    id: "smart-annuity",
+    name: "Tata AIA Smart Annuity Plan",
+    shortName: "Smart Annuity",
+    type: "Guaranteed Annuity Plan",
+    tagline: "7.35% guaranteed lifetime income — better than FD",
+    description: "A guaranteed annuity plan that converts your lump sum (PF, gratuity, or savings) into a steady lifetime income at 7.35% — significantly better than fixed deposit rates. Ideal for retirees who want zero market risk and predictable monthly income for life.",
+    keyBenefits: [
+      "Guaranteed lifetime income at 7.35% — beats FD rates",
+      "Ideal for deploying PF, gratuity, or retirement corpus",
+      "Multiple annuity payout options",
+      "Single life and joint life (spouse) options",
+      "Flexible premium payment modes",
+      "Flexible income payout frequency (monthly/quarterly/annual)"
+    ],
+    bestFor: "Guaranteed Lifetime Income",
+    icon: "📊",
+    color: "#0f766e",
+    highlight: "Better than FD"
+  },
 ];
 
 export function getRecommendations(profile: UserProfile): { primary: Plan[]; secondary: Plan[] } {
@@ -216,6 +257,20 @@ export function getRecommendations(profile: UserProfile): { primary: Plan[]; sec
   if (profile.goals.includes("health-corpus")) scores["shubh-health-pro"] += 4;
   if (incomeHigh) scores["shubh-health-pro"] += 2;
   if (profile.healthConditions === "yes") scores["shubh-health-pro"] += 2;
+
+  // FG Pension GA-1 — late retirement planning, older age
+  if (profile.goals.includes("retirement")) scores["fg-pension-ga1"] += 3;
+  if (profile.age === "46-55") scores["fg-pension-ga1"] += 3;
+  if (profile.age === "55+") scores["fg-pension-ga1"] += 5;
+  if (hasDependent) scores["fg-pension-ga1"] += 2;
+  if (profile.goals.includes("family-protection") && ageOld) scores["fg-pension-ga1"] += 2;
+
+  // Smart Annuity — guaranteed income, PF deployment, conservative retirees
+  if (profile.goals.includes("guaranteed-returns")) scores["smart-annuity"] += 3;
+  if (profile.goals.includes("regular-income")) scores["smart-annuity"] += 3;
+  if (profile.goals.includes("retirement")) scores["smart-annuity"] += 2;
+  if (profile.riskAppetite === "conservative") scores["smart-annuity"] += 2;
+  if (ageOld) scores["smart-annuity"] += 3;
 
   // Sort all plans by score
   const sorted = PLANS

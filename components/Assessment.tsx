@@ -11,8 +11,14 @@ interface Props {
 const EMPTY_PROFILE: UserProfile = {
   age: "", gender: "", lifeStage: "", income: "",
   dependents: "", riskAppetite: "", goals: [],
-  hasExistingCover: "", healthConditions: "",
+  hasExistingCover: "", existingPolicyType: "", healthConditions: "",
 };
+
+function getActiveQuestions(profile: UserProfile) {
+  return QUESTIONS.filter(q =>
+    q.id !== "existingPolicyType" || profile.hasExistingCover === "yes"
+  );
+}
 
 export default function Assessment({ onComplete, onBack }: Props) {
   const [step, setStep] = useState(0);
@@ -21,8 +27,9 @@ export default function Assessment({ onComplete, onBack }: Props) {
   const [animDir, setAnimDir] = useState<"forward" | "back">("forward");
   const [visible, setVisible] = useState(true);
 
-  const q = QUESTIONS[step];
-  const totalSteps = QUESTIONS.length;
+  const activeQuestions = getActiveQuestions(profile);
+  const q = activeQuestions[step];
+  const totalSteps = activeQuestions.length;
   const progress = ((step) / totalSteps) * 100;
 
   const currentValue = profile[q.field as keyof UserProfile];
@@ -35,11 +42,12 @@ export default function Assessment({ onComplete, onBack }: Props) {
   }
 
   function handleMulti(val: string) {
-    const current = (profile.goals as string[]) || [];
+    const field = q.field as keyof UserProfile;
+    const current = (profile[field] as string[]) || [];
     if (current.includes(val)) {
-      setProfile(prev => ({ ...prev, goals: current.filter(v => v !== val) }));
+      setProfile(prev => ({ ...prev, [field]: current.filter((v: string) => v !== val) }));
     } else {
-      setProfile(prev => ({ ...prev, goals: [...current, val] }));
+      setProfile(prev => ({ ...prev, [field]: [...current, val] }));
     }
   }
 
@@ -125,7 +133,7 @@ export default function Assessment({ onComplete, onBack }: Props) {
           <div className="space-y-3 mb-10">
             {q.options.map(opt => {
               const selected = q.type === "multi"
-                ? (profile.goals as string[]).includes(opt.value)
+                ? (currentValue as string[]).includes(opt.value)
                 : currentValue === opt.value;
 
               return (
