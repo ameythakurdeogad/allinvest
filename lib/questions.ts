@@ -141,12 +141,12 @@ export const QUESTIONS: Question[] = [
     ],
   },
   {
-    id: "existingPolicyType",
+    id: "existingPolicyTypes",
     step: 9,
     question: "What type of policy do you currently have?",
     subtext: "Select all that apply — this helps us avoid duplication and find gaps in your coverage.",
     type: "multi",
-    field: "existingPolicyType",
+    field: "existingPolicyTypes",
     why: "Knowing your existing cover lets us recommend plans that complement — not repeat — what you already have.",
     options: [
       { value: "term",       label: "Term Insurance",          sublabel: "Pure life cover, no maturity benefit", emoji: "🛡️" },
