@@ -5,7 +5,10 @@ export async function POST(req: NextRequest) {
   const { name, phone, email, date, timeSlot, plans, profile } = body;
 
   if (!name || !phone) {
-    return NextResponse.json({ error: "Name and phone are required" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Name and phone are required" },
+      { status: 400 },
+    );
   }
 
   const errors: string[] = [];
@@ -24,11 +27,11 @@ export async function POST(req: NextRequest) {
       await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${RESEND_API_KEY}`,
+          Authorization: `Bearer ${RESEND_API_KEY}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "All-Invest <noreply@yourdomain.com>",
+          from: "All-Invest <noreply@resend.dev>",
           to: [ADVISOR_EMAIL],
           subject: `📞 New Call Booking — ${name}`,
           html: `
@@ -61,11 +64,11 @@ export async function POST(req: NextRequest) {
         await fetch("https://api.resend.com/emails", {
           method: "POST",
           headers: {
-            "Authorization": `Bearer ${RESEND_API_KEY}`,
+            Authorization: `Bearer ${RESEND_API_KEY}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            from: "All-Invest <noreply@yourdomain.com>",
+            from: "All-Invest <noreply@resend.dev>",
             to: [email],
             subject: "Your free consultation is booked ✅",
             html: `
@@ -92,7 +95,9 @@ export async function POST(req: NextRequest) {
     }
   } else {
     errors.push("RESEND_API_KEY not set — email skipped");
-    console.warn("⚠️  RESEND_API_KEY not configured. Booking received but no email sent.");
+    console.warn(
+      "⚠️  RESEND_API_KEY not configured. Booking received but no email sent.",
+    );
   }
 
   // ── 2. Log to Google Sheets ────────────────────────────────────────────────
@@ -128,7 +133,9 @@ export async function POST(req: NextRequest) {
     }
   } else {
     errors.push("GOOGLE_SHEETS_WEBHOOK_URL not set — sheet logging skipped");
-    console.warn("⚠️  GOOGLE_SHEETS_WEBHOOK_URL not configured. Booking received but not logged to Sheets.");
+    console.warn(
+      "⚠️  GOOGLE_SHEETS_WEBHOOK_URL not configured. Booking received but not logged to Sheets.",
+    );
   }
 
   return NextResponse.json({
