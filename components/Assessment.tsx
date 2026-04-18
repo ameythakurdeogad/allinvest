@@ -11,12 +11,12 @@ interface Props {
 const EMPTY_PROFILE: UserProfile = {
   age: "", gender: "", lifeStage: "", income: "",
   dependents: "", riskAppetite: "", goals: [],
-  hasExistingCover: "", existingPolicyType: "", healthConditions: "",
+  hasExistingCover: "", existingPolicyTypes: [], healthConditions: "",
 };
 
 function getActiveQuestions(profile: UserProfile) {
   return QUESTIONS.filter(q =>
-    q.id !== "existingPolicyType" || profile.hasExistingCover === "yes"
+    q.id !== "existingPolicyTypes" || profile.hasExistingCover === "yes"
   );
 }
 

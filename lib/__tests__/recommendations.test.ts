@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getAllocation, PLANS } from "@/lib/recommendations";
+import { getAllocation, PLANS, getRecommendations, UserProfile } from "@/lib/recommendations";
 
 describe("getAllocation", () => {
   it("returns correct allocation for 18-25 conservative", () => {
@@ -89,5 +89,71 @@ describe("Plan bucket assignments", () => {
     PLANS.forEach(p => {
       expect(["protection", "stable", "market"]).toContain(p.bucket);
     });
+  });
+});
+
+const BASE_PROFILE: UserProfile = {
+  age: "26-35",
+  gender: "male",
+  lifeStage: "single",
+  income: "6-12L",
+  dependents: "0",
+  riskAppetite: "moderate",
+  goals: ["wealth-creation"],
+  hasExistingCover: "no",
+  existingPolicyTypes: [],
+  healthConditions: "no",
+};
+
+describe("getRecommendations forced coverage", () => {
+  it("always includes sampoorna-raksha in primary when no existing cover", () => {
+    const { primary } = getRecommendations(BASE_PROFILE);
+    expect(primary.map(p => p.id)).toContain("sampoorna-raksha");
+  });
+
+  it("always includes shubh-health-pro in primary when no existing cover", () => {
+    const { primary } = getRecommendations(BASE_PROFILE);
+    expect(primary.map(p => p.id)).toContain("shubh-health-pro");
+  });
+
+  it("excludes sampoorna-raksha force when user has term", () => {
+    const profile: UserProfile = {
+      ...BASE_PROFILE,
+      hasExistingCover: "yes",
+      existingPolicyTypes: ["term"],
+    };
+    const { primary } = getRecommendations(profile);
+    expect(primary.map(p => p.id)).not.toContain("sampoorna-raksha");
+  });
+
+  it("excludes shubh-health-pro force when user has health insurance", () => {
+    const profile: UserProfile = {
+      ...BASE_PROFILE,
+      hasExistingCover: "yes",
+      existingPolicyTypes: ["health"],
+    };
+    const { primary } = getRecommendations(profile);
+    expect(primary.map(p => p.id)).not.toContain("shubh-health-pro");
+  });
+
+  it("still includes sampoorna-raksha when user has health but not term", () => {
+    const profile: UserProfile = {
+      ...BASE_PROFILE,
+      hasExistingCover: "yes",
+      existingPolicyTypes: ["health"],
+    };
+    const { primary } = getRecommendations(profile);
+    expect(primary.map(p => p.id)).toContain("sampoorna-raksha");
+  });
+
+  it("forces both plans when hasExistingCover is unsure", () => {
+    const profile: UserProfile = {
+      ...BASE_PROFILE,
+      hasExistingCover: "unsure",
+      existingPolicyTypes: [],
+    };
+    const { primary } = getRecommendations(profile);
+    expect(primary.map(p => p.id)).toContain("sampoorna-raksha");
+    expect(primary.map(p => p.id)).toContain("shubh-health-pro");
   });
 });
