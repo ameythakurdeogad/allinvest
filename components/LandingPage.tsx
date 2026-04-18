@@ -43,7 +43,7 @@ export default function LandingPage({ onStart }: Props) {
       {/* Nav */}
       <nav className="sticky top-0 z-50 backdrop-blur-md bg-cream/80 border-b border-cream-dark">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="font-display text-xl font-bold text-navy">FinPlan</span>
+          <span className="font-display text-xl font-bold text-navy">All-Invest</span>
           <button
             onClick={onStart}
             className="btn-primary px-5 py-2 rounded-full text-sm font-medium"
@@ -168,7 +168,7 @@ export default function LandingPage({ onStart }: Props) {
       {/* Footer */}
       <footer className="border-t border-cream-dark mt-12">
         <div className="max-w-5xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate">
-          <span className="font-display font-bold text-navy text-lg">FinPlan</span>
+          <span className="font-display font-bold text-navy text-lg">All-Invest</span>
           <span>Financial guidance you can trust. Not a registered investment advisor.</span>
         </div>
       </footer>

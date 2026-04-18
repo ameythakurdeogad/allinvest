@@ -146,7 +146,7 @@ export default function Results({ profile, onRetake }: Props) {
       {/* Nav */}
       <nav className="sticky top-0 z-50 backdrop-blur-md bg-cream/80 border-b border-cream-dark">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="font-display text-xl font-bold text-navy">FinPlan</span>
+          <span className="font-display text-xl font-bold text-navy">All-Invest</span>
           <button
             onClick={onRetake}
             className="text-sm text-slate hover:text-navy"

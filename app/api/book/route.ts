@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "FinPlan <noreply@yourdomain.com>",
+          from: "All-Invest <noreply@yourdomain.com>",
           to: [ADVISOR_EMAIL],
           subject: `📞 New Call Booking — ${name}`,
           html: `
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            from: "FinPlan <noreply@yourdomain.com>",
+            from: "All-Invest <noreply@yourdomain.com>",
             to: [email],
             subject: "Your free consultation is booked ✅",
             html: `
@@ -102,6 +102,7 @@ export async function POST(req: NextRequest) {
     try {
       await fetch(SHEETS_WEBHOOK_URL, {
         method: "POST",
+        redirect: "follow",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           timestamp: new Date().toISOString(),
