@@ -123,6 +123,7 @@ export const QUESTIONS: Question[] = [
       { value: "health-corpus",      label: "Build a health fund",       emoji: "🏥" },
       { value: "regular-income",     label: "Get regular income",        emoji: "💸" },
       { value: "guaranteed-returns", label: "Guaranteed returns only",   emoji: "🔒" },
+      { value: "child-education",    label: "Fund child's education",    emoji: "🎓" },
     ],
   },
   {

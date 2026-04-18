@@ -55,11 +55,12 @@ export const PLANS: Plan[] = [
     keyBenefits: [
       "Three income options: Early, Deferred, or Lump Sum",
       "Guaranteed returns — locked at policy start",
+      "Endowment option: lump sum payout timed to child's education milestones",
       "Regular income for monthly cash flow needs",
       "Ideal for retirement income planning",
       "Life cover included throughout"
     ],
-    bestFor: "Regular Cash Flow & Retirement",
+    bestFor: "Regular Cash Flow, Retirement & Child Education",
     icon: "💰",
     color: "#2d6a4f",
   },
@@ -132,12 +133,13 @@ export const PLANS: Plan[] = [
     keyBenefits: [
       "Returns guaranteed at policy start",
       "Zero market risk",
+      "Endowment option: plan maturity aligned to child's college entry",
       "Single or limited premium payment",
       "Lump sum maturity payout",
       "Life cover throughout the policy",
       "Ideal for conservative investors"
     ],
-    bestFor: "Guaranteed Growth",
+    bestFor: "Guaranteed Growth & Child Education",
     icon: "🔒",
     color: "#065f46",
   },
@@ -186,15 +188,17 @@ export function getRecommendations(profile: UserProfile): { primary: Plan[]; sec
   if (incomeHigh && hasDependent) scores["maha-raksha"] += 2;
   if (profile.goals.includes("family-protection") && incomeHigh) scores["maha-raksha"] += 2;
 
-  // GRIP — conservative, guaranteed
+  // GRIP — conservative, guaranteed, child education
   if (profile.riskAppetite === "conservative") scores["grip"] += 4;
   if (profile.goals.includes("guaranteed-returns")) scores["grip"] += 3;
+  if (profile.goals.includes("child-education")) scores["grip"] += 4;
   if (ageOld) scores["grip"] += 2;
   if (profile.goals.includes("tax-saving")) scores["grip"] += 1;
 
-  // Shubh Flexi — retirement or regular income
+  // Shubh Flexi — retirement or regular income or child education
   if (profile.goals.includes("retirement")) scores["shubh-flexi"] += 3;
   if (profile.goals.includes("regular-income")) scores["shubh-flexi"] += 3;
+  if (profile.goals.includes("child-education")) scores["shubh-flexi"] += 4;
   if (ageOld || ageMid) scores["shubh-flexi"] += 2;
 
   // Param Raksha — aggressive or moderate + wealth

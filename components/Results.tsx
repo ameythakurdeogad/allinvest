@@ -16,6 +16,7 @@ const GOAL_LABELS: Record<string, string> = {
   "health-corpus": "Health Corpus",
   "regular-income": "Regular Income",
   "guaranteed-returns": "Guaranteed Returns",
+  "child-education": "Child Education",
 };
 
 const PROFILE_LABELS: Record<string, Record<string, string>> = {
