@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getAllocation } from "@/lib/recommendations";
+import { getAllocation, PLANS } from "@/lib/recommendations";
 
 describe("getAllocation", () => {
   it("returns correct allocation for 18-25 conservative", () => {
@@ -45,5 +45,49 @@ describe("getAllocation", () => {
         expect(getAllocation(age, risk).protection).toBeGreaterThanOrEqual(20);
       }
     }
+  });
+});
+
+describe("Plan bucket assignments", () => {
+  it("sampoorna-raksha is protection", () => {
+    expect(PLANS.find(p => p.id === "sampoorna-raksha")?.bucket).toBe("protection");
+  });
+
+  it("maha-raksha is protection", () => {
+    expect(PLANS.find(p => p.id === "maha-raksha")?.bucket).toBe("protection");
+  });
+
+  it("shubh-shakti is protection", () => {
+    expect(PLANS.find(p => p.id === "shubh-shakti")?.bucket).toBe("protection");
+  });
+
+  it("grip is stable", () => {
+    expect(PLANS.find(p => p.id === "grip")?.bucket).toBe("stable");
+  });
+
+  it("shubh-flexi is stable", () => {
+    expect(PLANS.find(p => p.id === "shubh-flexi")?.bucket).toBe("stable");
+  });
+
+  it("smart-annuity is stable", () => {
+    expect(PLANS.find(p => p.id === "smart-annuity")?.bucket).toBe("stable");
+  });
+
+  it("fg-pension-ga1 is stable", () => {
+    expect(PLANS.find(p => p.id === "fg-pension-ga1")?.bucket).toBe("stable");
+  });
+
+  it("param-raksha is market", () => {
+    expect(PLANS.find(p => p.id === "param-raksha")?.bucket).toBe("market");
+  });
+
+  it("shubh-health-pro is market", () => {
+    expect(PLANS.find(p => p.id === "shubh-health-pro")?.bucket).toBe("market");
+  });
+
+  it("every plan has a bucket", () => {
+    PLANS.forEach(p => {
+      expect(["protection", "stable", "market"]).toContain(p.bucket);
+    });
   });
 });

@@ -59,6 +59,7 @@ export interface Plan {
   bestFor: string;
   icon: string;
   color: string;
+  bucket: "protection" | "stable" | "market";
   highlight?: string;
 }
 
@@ -81,6 +82,7 @@ export const PLANS: Plan[] = [
     bestFor: "Family Protection",
     icon: "🛡️",
     color: "#1a3a6b",
+    bucket: "protection",
     highlight: "Most recommended for families"
   },
   {
@@ -101,6 +103,7 @@ export const PLANS: Plan[] = [
     bestFor: "Regular Cash Flow, Retirement & Child Education",
     icon: "💰",
     color: "#2d6a4f",
+    bucket: "stable",
   },
   {
     id: "param-raksha",
@@ -120,6 +123,7 @@ export const PLANS: Plan[] = [
     bestFor: "Long-Term Wealth Creation",
     icon: "📈",
     color: "#6b46c1",
+    bucket: "market",
   },
   {
     id: "shubh-shakti",
@@ -140,6 +144,7 @@ export const PLANS: Plan[] = [
     bestFor: "Women's Protection & Health",
     icon: "✨",
     color: "#b83280",
+    bucket: "protection",
     highlight: "Designed for women"
   },
   {
@@ -160,6 +165,7 @@ export const PLANS: Plan[] = [
     bestFor: "High-Income Individuals",
     icon: "👑",
     color: "#92400e",
+    bucket: "protection",
   },
   {
     id: "grip",
@@ -180,6 +186,7 @@ export const PLANS: Plan[] = [
     bestFor: "Guaranteed Growth & Child Education",
     icon: "🔒",
     color: "#065f46",
+    bucket: "stable",
   },
   {
     id: "shubh-health-pro",
@@ -199,6 +206,7 @@ export const PLANS: Plan[] = [
     bestFor: "Medical Corpus Building",
     icon: "🏥",
     color: "#0369a1",
+    bucket: "market",
     highlight: "Best for professionals"
   },
   {
@@ -219,6 +227,7 @@ export const PLANS: Plan[] = [
     bestFor: "Late Retirement Planning",
     icon: "🏦",
     color: "#7c3aed",
+    bucket: "stable",
     highlight: "Best for age 50+"
   },
   {
@@ -239,6 +248,7 @@ export const PLANS: Plan[] = [
     bestFor: "Guaranteed Lifetime Income",
     icon: "📊",
     color: "#0f766e",
+    bucket: "stable",
     highlight: "Better than FD"
   },
 ];
