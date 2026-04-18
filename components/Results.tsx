@@ -102,7 +102,15 @@ function PlanCard({ plan, profile, rank, onBook }: { plan: Plan; profile: UserPr
               )}
             </div>
             <h3 className="font-display font-bold text-navy text-lg leading-tight">{plan.shortName}</h3>
-            <p className="text-xs text-slate mt-0.5">{plan.type}</p>
+            <div className="flex items-center gap-2 flex-wrap mt-0.5">
+              <p className="text-xs text-slate">{plan.type}</p>
+              <span
+                className="text-xs font-semibold px-2 py-0.5 rounded-full text-white"
+                style={{ background: BUCKET_META[plan.bucket].color }}
+              >
+                {BUCKET_META[plan.bucket].label}
+              </span>
+            </div>
           </div>
         </div>
 
