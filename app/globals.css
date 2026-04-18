@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @import "tailwindcss";
 
@@ -11,11 +11,12 @@
   --color-cream-dark: #f0ece1;
   --color-slate: #4a5568;
 
-  --font-display: 'Playfair Display', serif;
-  --font-sans: 'DM Sans', sans-serif;
+  --font-display: 'Inter', sans-serif;
+  --font-sans: 'Inter', sans-serif;
 }
 
 :root {
+  color-scheme: light;
   --navy: #0f2444;
   --navy-light: #1a3a6b;
   --gold: #c9a84c;
@@ -30,13 +31,13 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Inter', sans-serif;
   background: var(--cream);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
 }
 
-.font-display { font-family: 'Playfair Display', serif; }
+.font-display { font-family: 'Inter', sans-serif; }
 
 .progress-bar {
   height: 3px;

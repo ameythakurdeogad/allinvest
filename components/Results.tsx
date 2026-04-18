@@ -1,6 +1,11 @@
 "use client";
 import { useState } from "react";
-import { UserProfile, getRecommendations, Plan, getAllocation } from "@/lib/recommendations";
+import {
+  UserProfile,
+  getRecommendations,
+  Plan,
+  getAllocation,
+} from "@/lib/recommendations";
 import BookingModal from "@/components/BookingModal";
 
 interface Props {
@@ -11,7 +16,7 @@ interface Props {
 const GOAL_LABELS: Record<string, string> = {
   "family-protection": "Family Protection",
   "wealth-creation": "Wealth Growth",
-  "retirement": "Retirement",
+  retirement: "Retirement",
   "tax-saving": "Tax Saving",
   "health-corpus": "Health Corpus",
   "regular-income": "Regular Income",
@@ -20,30 +25,49 @@ const GOAL_LABELS: Record<string, string> = {
 };
 
 const PROFILE_LABELS: Record<string, Record<string, string>> = {
-  age: { "18-25": "18–25 yrs", "26-35": "26–35 yrs", "36-45": "36–45 yrs", "46-55": "46–55 yrs", "55+": "55+ yrs" },
+  age: {
+    "18-25": "18–25 yrs",
+    "26-35": "26–35 yrs",
+    "36-45": "36–45 yrs",
+    "46-55": "46–55 yrs",
+    "55+": "55+ yrs",
+  },
   gender: { male: "Male", female: "Female", other: "Other" },
-  lifeStage: { single: "Single", married: "Married", "married-kids": "Married with kids", "single-parent": "Single parent" },
-  riskAppetite: { conservative: "Conservative", moderate: "Moderate risk", aggressive: "Growth-focused" },
+  lifeStage: {
+    single: "Single",
+    married: "Married",
+    "married-kids": "Married with kids",
+    "single-parent": "Single parent",
+  },
+  riskAppetite: {
+    conservative: "Conservative",
+    moderate: "Moderate risk",
+    aggressive: "Growth-focused",
+  },
 };
 
 const BUCKET_META = {
   protection: { label: "Protection", color: "#1a3a6b" },
-  stable:     { label: "Stable Growth", color: "#2d6a4f" },
-  market:     { label: "Market-Linked", color: "#6b46c1" },
+  stable: { label: "Stable Growth", color: "#2d6a4f" },
+  market: { label: "Market-Linked", color: "#6b46c1" },
 } as const;
 
 function AllocationBar({ profile }: { profile: UserProfile }) {
   const alloc = getAllocation(profile.age, profile.riskAppetite);
   const segments: { key: keyof typeof BUCKET_META; pct: number }[] = [
     { key: "protection", pct: alloc.protection },
-    { key: "stable",     pct: alloc.stable },
-    { key: "market",     pct: alloc.market },
+    { key: "stable", pct: alloc.stable },
+    { key: "market", pct: alloc.market },
   ];
 
   return (
     <div className="bg-white rounded-2xl border border-cream-dark p-6 mb-6">
-      <p className="font-semibold text-navy text-sm mb-0.5">How to spread your investable income</p>
-      <p className="text-xs text-slate mb-4">Based on your age and risk appetite</p>
+      <p className="font-semibold text-navy text-sm mb-0.5">
+        How to spread your investable income
+      </p>
+      <p className="text-xs text-slate mb-4">
+        Based on your age and risk appetite
+      </p>
       <div className="flex rounded-lg overflow-hidden h-8 mb-3">
         {segments.map(({ key, pct }) => (
           <div
@@ -71,7 +95,17 @@ function AllocationBar({ profile }: { profile: UserProfile }) {
   );
 }
 
-function PlanCard({ plan, profile, rank, onBook }: { plan: Plan; profile: UserProfile; rank: number; onBook: (plan: Plan) => void }) {
+function PlanCard({
+  plan,
+  profile,
+  rank,
+  onBook,
+}: {
+  plan: Plan;
+  profile: UserProfile;
+  rank: number;
+  onBook: (plan: Plan) => void;
+}) {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -101,7 +135,9 @@ function PlanCard({ plan, profile, rank, onBook }: { plan: Plan; profile: UserPr
                 </span>
               )}
             </div>
-            <h3 className="font-display font-bold text-navy text-lg leading-tight">{plan.shortName}</h3>
+            <h3 className="font-display font-bold text-navy text-lg leading-tight">
+              {plan.shortName}
+            </h3>
             <div className="flex items-center gap-2 flex-wrap mt-0.5">
               <p className="text-xs text-slate">{plan.type}</p>
               <span
@@ -114,11 +150,13 @@ function PlanCard({ plan, profile, rank, onBook }: { plan: Plan; profile: UserPr
           </div>
         </div>
 
-        <p className="text-navy/80 text-sm leading-relaxed mb-4">{plan.tagline}</p>
+        <p className="text-navy/80 text-sm leading-relaxed mb-4">
+          {plan.tagline}
+        </p>
 
         {/* Key benefits preview */}
         <ul className="space-y-1.5 mb-4">
-          {plan.keyBenefits.slice(0, 3).map(b => (
+          {plan.keyBenefits.slice(0, 3).map((b) => (
             <li key={b} className="flex items-start gap-2 text-sm text-slate">
               <span className="text-gold mt-0.5 shrink-0">✓</span>
               <span>{b}</span>
@@ -134,7 +172,7 @@ function PlanCard({ plan, profile, rank, onBook }: { plan: Plan; profile: UserPr
             {plan.bestFor}
           </span>
           <button
-            onClick={() => setExpanded(e => !e)}
+            onClick={() => setExpanded((e) => !e)}
             className="text-sm text-navy underline underline-offset-2"
           >
             {expanded ? "Show less" : "Learn more"}
@@ -145,10 +183,14 @@ function PlanCard({ plan, profile, rank, onBook }: { plan: Plan; profile: UserPr
       {/* Expanded detail */}
       {expanded && (
         <div className="border-t border-cream-dark bg-cream/50 p-6">
-          <p className="text-sm text-slate leading-relaxed mb-4">{plan.description}</p>
-          <h4 className="font-semibold text-navy text-sm mb-2">All key benefits</h4>
+          <p className="text-sm text-slate leading-relaxed mb-4">
+            {plan.description}
+          </p>
+          <h4 className="font-semibold text-navy text-sm mb-2">
+            All key benefits
+          </h4>
           <ul className="space-y-1.5 mb-4">
-            {plan.keyBenefits.map(b => (
+            {plan.keyBenefits.map((b) => (
               <li key={b} className="flex items-start gap-2 text-sm text-slate">
                 <span className="text-gold mt-0.5 shrink-0">✓</span>
                 <span>{b}</span>
@@ -156,12 +198,14 @@ function PlanCard({ plan, profile, rank, onBook }: { plan: Plan; profile: UserPr
             ))}
           </ul>
           <div className="bg-navy/5 rounded-xl p-4 text-sm">
-            <p className="font-semibold text-navy mb-1">Why we recommended this for you</p>
+            <p className="font-semibold text-navy mb-1">
+              Why we recommended this for you
+            </p>
             <p className="text-slate">
               Based on your profile — {PROFILE_LABELS.age[profile.age]},{" "}
-              {PROFILE_LABELS.lifeStage[profile.lifeStage]},{" "}
-              goals: {profile.goals.map(g => GOAL_LABELS[g]).join(", ")} —
-              this plan directly addresses what matters most to you right now.
+              {PROFILE_LABELS.lifeStage[profile.lifeStage]}, goals:{" "}
+              {profile.goals.map((g) => GOAL_LABELS[g]).join(", ")} — this plan
+              directly addresses what matters most to you right now.
             </p>
           </div>
         </div>
@@ -186,12 +230,18 @@ export default function Results({ profile, onRetake }: Props) {
   const [bookedPlan, setBookedPlan] = useState<Plan | null>(null);
   const [globalBookOpen, setGlobalBookOpen] = useState(false);
 
-  const filteredPlans = activeGoal === "all"
-    ? primary
-    : primary.filter(p =>
-        p.bestFor.toLowerCase().includes(activeGoal.replace("-", " ").toLowerCase()) ||
-        p.keyBenefits.some(b => b.toLowerCase().includes(activeGoal.replace("-", " ")))
-      );
+  const filteredPlans =
+    activeGoal === "all"
+      ? primary
+      : primary.filter(
+          (p) =>
+            p.bestFor
+              .toLowerCase()
+              .includes(activeGoal.replace("-", " ").toLowerCase()) ||
+            p.keyBenefits.some((b) =>
+              b.toLowerCase().includes(activeGoal.replace("-", " ")),
+            ),
+        );
 
   const displayPlans = filteredPlans.length > 0 ? filteredPlans : primary;
 
@@ -200,7 +250,9 @@ export default function Results({ profile, onRetake }: Props) {
       {/* Nav */}
       <nav className="sticky top-0 z-50 backdrop-blur-md bg-cream/80 border-b border-cream-dark">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="font-display text-xl font-bold text-navy">All-Invest</span>
+          <span className="font-display text-xl font-bold text-navy">
+            All-Invest
+          </span>
           <button
             onClick={onRetake}
             className="text-sm text-slate hover:text-navy"
@@ -238,8 +290,11 @@ export default function Results({ profile, onRetake }: Props) {
                 {PROFILE_LABELS.riskAppetite[profile.riskAppetite]}
               </span>
             )}
-            {profile.goals.map(g => (
-              <span key={g} className="text-xs px-3 py-1 rounded-full bg-gold/15 text-navy border border-gold/25 font-medium">
+            {profile.goals.map((g) => (
+              <span
+                key={g}
+                className="text-xs px-3 py-1 rounded-full bg-gold/15 text-navy border border-gold/25 font-medium"
+              >
                 {GOAL_LABELS[g]}
               </span>
             ))}
@@ -264,7 +319,7 @@ export default function Results({ profile, onRetake }: Props) {
             >
               All
             </button>
-            {profile.goals.map(g => (
+            {profile.goals.map((g) => (
               <button
                 key={g}
                 onClick={() => setActiveGoal(g)}
@@ -283,22 +338,40 @@ export default function Results({ profile, onRetake }: Props) {
         {/* Plan cards */}
         <div className="grid md:grid-cols-2 gap-6 mb-10">
           {displayPlans.map((plan, i) => (
-            <PlanCard key={plan.id} plan={plan} profile={profile} rank={i + 1} onBook={setBookedPlan} />
+            <PlanCard
+              key={plan.id}
+              plan={plan}
+              profile={profile}
+              rank={i + 1}
+              onBook={setBookedPlan}
+            />
           ))}
         </div>
 
         {/* Global CTA banner */}
         <div
           className="rounded-2xl p-8 text-white relative overflow-hidden mb-10"
-          style={{ background: "linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%)" }}
+          style={{
+            background:
+              "linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%)",
+          }}
         >
-          <div className="absolute top-0 right-0 w-56 h-56 opacity-10"
-            style={{ background: "radial-gradient(circle, var(--gold) 0%, transparent 70%)" }} />
+          <div
+            className="absolute top-0 right-0 w-56 h-56 opacity-10"
+            style={{
+              background:
+                "radial-gradient(circle, var(--gold) 0%, transparent 70%)",
+            }}
+          />
           <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-6 justify-between">
             <div>
-              <h2 className="font-display text-xl font-bold mb-1">Not sure which plan to pick?</h2>
+              <h2 className="font-display text-xl font-bold mb-1">
+                Need personalized plan as per your financial goals?
+              </h2>
               <p className="text-white/70 text-sm">
-                Book a free 30-minute call with our advisor. They will walk you through your shortlist and answer every question. No pressure, no obligation.
+                Book a free 30-minute call with our advisor. They will walk you
+                through your shortlist and answer every question. No pressure,
+                no obligation.
               </p>
             </div>
             <button
@@ -313,16 +386,24 @@ export default function Results({ profile, onRetake }: Props) {
         {/* Secondary plans */}
         {secondary.length > 0 && (
           <div>
-            <h2 className="font-display text-xl font-bold text-navy mb-2">Other plans in our catalogue</h2>
+            <h2 className="font-display text-xl font-bold text-navy mb-2">
+              Other plans in our catalogue
+            </h2>
             <p className="text-sm text-slate mb-4">
-              These didn&apos;t rank highly for your current profile, but your advisor can explain when they might be relevant.
+              These didn&apos;t rank highly for your current profile, but your
+              advisor can explain when they might be relevant.
             </p>
             <div className="grid md:grid-cols-3 gap-4">
-              {secondary.map(plan => (
-                <div key={plan.id} className="bg-white rounded-xl border border-cream-dark p-5">
+              {secondary.map((plan) => (
+                <div
+                  key={plan.id}
+                  className="bg-white rounded-xl border border-cream-dark p-5"
+                >
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-xl">{plan.icon}</span>
-                    <span className="font-semibold text-navy text-sm">{plan.shortName}</span>
+                    <span className="font-semibold text-navy text-sm">
+                      {plan.shortName}
+                    </span>
                   </div>
                   <p className="text-xs text-slate">{plan.type}</p>
                 </div>
