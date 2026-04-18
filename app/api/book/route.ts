@@ -69,7 +69,8 @@ export async function POST(req: NextRequest) {
           },
           body: JSON.stringify({
             from: "All-Invest <noreply@resend.dev>",
-            to: [email],
+            reply_to: ADVISOR_EMAIL,
+            to: ADVISOR_EMAIL,
             subject: "Your free consultation is booked ✅",
             html: `
               <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 24px;">
