@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #0f2444;
+  --color-navy-light: #1a3a6b;
+  --color-gold: #c9a84c;
+  --color-gold-light: #e8c97a;
+  --color-cream: #faf8f3;
+  --color-cream-dark: #f0ece1;
+  --color-slate: #4a5568;
+
+  --font-display: 'Playfair Display', serif;
+  --font-sans: 'DM Sans', sans-serif;
+}
+
+:root {
+  --navy: #0f2444;
+  --navy-light: #1a3a6b;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --cream: #faf8f3;
+  --cream-dark: #f0ece1;
+  --slate: #4a5568;
+  --text: #1a202c;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display { font-family: 'Playfair Display', serif; }
+
+.progress-bar {
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  transition: width 0.4s ease;
+}
+
+.plan-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.plan-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(15,36,68,0.12);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: white;
+  transition: all 0.2s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(15,36,68,0.3);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--navy);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.btn-gold:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(201,168,76,0.4);
+}
+
+.gold-line {
+  width: 48px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 2px;
+}
+
+.goal-pill { transition: all 0.15s ease; cursor: pointer; }
+
+.mesh-bg {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(15,36,68,0.06) 0%, transparent 60%),
+    var(--cream);
+}
