@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { UserProfile, getRecommendations, Plan } from "@/lib/recommendations";
+import { UserProfile, getRecommendations, Plan, getAllocation } from "@/lib/recommendations";
 import BookingModal from "@/components/BookingModal";
 
 interface Props {
@@ -25,6 +25,51 @@ const PROFILE_LABELS: Record<string, Record<string, string>> = {
   lifeStage: { single: "Single", married: "Married", "married-kids": "Married with kids", "single-parent": "Single parent" },
   riskAppetite: { conservative: "Conservative", moderate: "Moderate risk", aggressive: "Growth-focused" },
 };
+
+const BUCKET_META = {
+  protection: { label: "Protection", color: "#1a3a6b" },
+  stable:     { label: "Stable Growth", color: "#2d6a4f" },
+  market:     { label: "Market-Linked", color: "#6b46c1" },
+} as const;
+
+function AllocationBar({ profile }: { profile: UserProfile }) {
+  const alloc = getAllocation(profile.age, profile.riskAppetite);
+  const segments: { key: keyof typeof BUCKET_META; pct: number }[] = [
+    { key: "protection", pct: alloc.protection },
+    { key: "stable",     pct: alloc.stable },
+    { key: "market",     pct: alloc.market },
+  ];
+
+  return (
+    <div className="bg-white rounded-2xl border border-cream-dark p-6 mb-6">
+      <p className="font-semibold text-navy text-sm mb-0.5">How to spread your investable income</p>
+      <p className="text-xs text-slate mb-4">Based on your age and risk appetite</p>
+      <div className="flex rounded-lg overflow-hidden h-8 mb-3">
+        {segments.map(({ key, pct }) => (
+          <div
+            key={key}
+            style={{ width: `${pct}%`, background: BUCKET_META[key].color }}
+            className="flex items-center justify-center"
+          >
+            <span className="text-white text-xs font-semibold">{pct}%</span>
+          </div>
+        ))}
+      </div>
+      <div className="flex gap-4 flex-wrap">
+        {segments.map(({ key, pct }) => (
+          <div key={key} className="flex items-center gap-1.5">
+            <span
+              className="w-2.5 h-2.5 rounded-full shrink-0"
+              style={{ background: BUCKET_META[key].color }}
+            />
+            <span className="text-xs text-slate">{BUCKET_META[key].label}</span>
+            <span className="text-xs font-semibold text-navy">{pct}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function PlanCard({ plan, profile, rank, onBook }: { plan: Plan; profile: UserProfile; rank: number; onBook: (plan: Plan) => void }) {
   const [expanded, setExpanded] = useState(false);
@@ -192,6 +237,11 @@ export default function Results({ profile, onRetake }: Props) {
             ))}
           </div>
         </div>
+
+        {/* Allocation bar */}
+        {profile.age && profile.riskAppetite && (
+          <AllocationBar profile={profile} />
+        )}
 
         {/* Goal filters */}
         {profile.goals.length > 1 && (
