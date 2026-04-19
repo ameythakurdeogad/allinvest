@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
 
 @import "tailwindcss";
 
@@ -11,8 +11,8 @@
   --color-cream-dark: #f0ece1;
   --color-slate: #4a5568;
 
-  --font-display: 'Inter', sans-serif;
-  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Poppins', sans-serif;
+  --font-sans: 'DM Sans', sans-serif;
 }
 
 :root {
@@ -28,16 +28,24 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+  background-color: #faf8f3;
+  color: #1a202c;
+  /* Prevent Samsung Internet and Android browsers from applying forced dark mode */
+  -webkit-text-size-adjust: 100%;
+}
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   background: var(--cream);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
 }
 
-.font-display { font-family: 'Inter', sans-serif; }
+.font-display { font-family: 'Poppins', sans-serif; }
 
 .progress-bar {
   height: 3px;

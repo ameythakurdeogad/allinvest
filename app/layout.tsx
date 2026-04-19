@@ -11,6 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <meta name="color-scheme" content="light" />
+        <meta name="supported-color-schemes" content="light" />
       </head>
       <body>{children}</body>
     </html>
